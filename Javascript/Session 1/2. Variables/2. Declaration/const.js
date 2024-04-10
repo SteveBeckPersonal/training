@@ -1,3 +1,2 @@
-const something = 'Hello world'
-something = 'Yes'
+const something = 'Whatever we want'
 console.log(something)

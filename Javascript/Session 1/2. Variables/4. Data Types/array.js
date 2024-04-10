@@ -10,4 +10,4 @@ console.log(arrayExample);
 console.log('--------------------------')
 console.log(arrayExample[0])
 console.log('--------------------------')
-console.log(arrayExample[1])
+console.log(arrayExample[3])

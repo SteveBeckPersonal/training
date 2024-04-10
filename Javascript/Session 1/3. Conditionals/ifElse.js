@@ -1,6 +1,6 @@
-let number1;
-let number2;
-let number3;
+let number1 = 3;
+let number2 = 2;
+let number3 = 1;
 let someBoolean = false;
 
 if(someBoolean){
@@ -15,13 +15,17 @@ else{
 //check this first
 if(number1 === number2){
 
-    //do something
+    console.log('first')
 }
 //check this second
 else if(number1 === number3){
-    // do something else
+    console.log('second')
+
 }
 //if none of the above do this
 else{
+    console.log('last')
 
 }
+
+console.log(`finished`)

@@ -1,4 +1,4 @@
-let number1 = 1;
+let number1 = 7;
 let number2 = 1;
 
 // === is our equals comparitor

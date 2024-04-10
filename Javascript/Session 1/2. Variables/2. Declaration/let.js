@@ -1,5 +1,6 @@
+
 let something = 'Hello'
 console.log(something)
 //cant redeclare but can re-assign it
-let something
+something = "World"
 console.log(something)
