@@ -33,14 +33,10 @@ async function cleanupCart(page){
 test(`Add item to the cart`, async ({page}) => {
     //add an item to the cart
     await addItemToCart(page,`/camera-photo`, 'Digital SLR Camera 12.2 Mpixel', 'Digital SLR Camera - Black');
-
-
-    //remove an item from the cart
+    
+    //validate item in cart
     await page.goto(`/cart`);
-    await expect(page.getByRole('row', { name: 'Picture of Digital SLR Camera' })).toBeVisible();
-    await page.getByRole('row', { name: 'Picture of Digital SLR Camera' }).getByRole('checkbox').check();
-    await page.getByRole('button', { name: 'Update shopping cart' }).click();
-    await expect(page.getByRole('row', { name: 'Picture of Digital SLR Camera' })).not.toBeVisible();
+    await expect(page.getByRole('row', { name: 'Picture of Digital SLR Camera' })).toBeVisible(); 
 })
 
 test(`Add multiple books to the cart`, async ({page}) => {
