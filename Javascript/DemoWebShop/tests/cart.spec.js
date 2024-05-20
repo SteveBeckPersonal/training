@@ -39,6 +39,24 @@ test(`Add item to the cart`, async ({page}) => {
     await expect(page.getByRole('row', { name: 'Picture of Digital SLR Camera' })).toBeVisible(); 
 })
 
+test(`Estimate shipping of cart`, async ({page}) => {
+
+    await test.step(`Add item to cart`, async () => {
+        await addItemToCart(page,`/camera-photo`, 'Digital SLR Camera 12.2 Mpixel', 'Digital SLR Camera - Black');
+    })
+    
+    await test.step(`Validate cart item`, async () => {
+        await page.goto(`/cart`);
+        await expect(page.getByRole('row', { name: 'Picture of Digital SLR Camera' })).toBeVisible(); 
+    })
+       
+    await test.step(`Estimate shipping cost validation`, async () => {
+        const shipping = {country:"Egypt",state:"Other (Non US)", zip:"12345", ground_billing:"0.00"};
+        await estimateShipping(page,shipping);    
+    })
+   
+})
+
 test(`Add multiple books to the cart`, async ({page}) => {
     const items = [{name:'Fiction', price:'24.00'},{name:'Computing and Internet', price: "10.00"}];
     
@@ -52,6 +70,19 @@ test(`Add multiple books to the cart`, async ({page}) => {
     }    
 })
 
+async function estimateShipping(page, shipping){
+    await page.getByLabel('Country:').selectOption(shipping.country);
+    await page.getByLabel('State / province:').selectOption(shipping.state);
+    await page.getByLabel('Zip / postal code:').clear();
+    await page.getByLabel('Zip / postal code:').fill(shipping.zip)
+    await page.getByRole('button', { name: 'Estimate shipping' }).click();
+
+    await expect(page.getByText(`Ground (`)).toBeVisible();
+
+    const groundString = await page.getByText(`Ground (`).innerText();
+    let formattedValue = groundString.split('(')[1].replace(`)`,``);
+    expect(formattedValue).toBe(shipping.ground_billing);
+}
 
 
 async function removeItems(page,items){
