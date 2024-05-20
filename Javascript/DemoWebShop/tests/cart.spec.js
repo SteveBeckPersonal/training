@@ -5,7 +5,8 @@ test.beforeEach(async ({page}) => {
  //login
  await page.goto(`/`)
  await page.getByRole('link', { name: 'Log in' }).click();
- // @ts-ignore
+ 
+ //@ts-ignore
  await page.getByLabel('Email:').fill(process.env.demo_user);
  // @ts-ignore
  await page.getByLabel('Password:').fill(process.env.demo_password);
@@ -13,8 +14,21 @@ test.beforeEach(async ({page}) => {
 
  await expect(page.getByRole('link', { name: process.env.demo_user })).toBeVisible();
  await expect(page.getByRole('link', { name: 'Log out' })).toBeVisible();
- await page.goto(`/cart`);
+
+ await cleanupCart(page);
 })
+
+async function cleanupCart(page){
+    await page.goto(`/cart`);
+    const itemNames = await page.getByRole('row').filter({has:page.getByRole(`checkbox`)}).locator(`.product-name`).allInnerTexts();
+    for(let item of itemNames){
+   
+       await expect(page.getByRole('row', { name: item })).toBeVisible();
+       await page.getByRole('row', { name: item }).getByRole('checkbox').check();
+       await page.getByRole('button', { name: 'Update shopping cart' }).click();
+       await expect(page.getByRole('row', { name: item })).not.toBeVisible();       
+    }
+}
 
 test(`Add item to the cart`, async ({page}) => {
     //add an item to the cart
@@ -38,11 +52,11 @@ test(`Add multiple books to the cart`, async ({page}) => {
     await page.goto(`/cart`);
     for(let item of items){
         const price = await page.getByRole('row', { name: item.name }).locator(`.product-subtotal`).innerText();
-        expect(price).toBe(item.price);
+        expect.soft(price).toBe(item.price);
     }    
-    
-   //await removeItems(page,items)
 })
+
+
 
 async function removeItems(page,items){
     await page.goto(`/cart`);
@@ -65,8 +79,10 @@ async function addItemToCart(page,section, itemName, itemVariation){
     if(itemVariation !== undefined){
         //Explain this on wednesday
         await page.locator(`//div[contains(text(),'${itemVariation}')]/ancestor::div[@class='product-variant-line']//input[@value='Add to cart']`).click();
+        await expect(page.getByText('The product has been added to')).toBeVisible();
         return;
     }
 
-    await page.locator(`//h1[contains(text(),'${itemName}')]/ancestor::div[@class='product-essential']//input[@value='Add to cart']`).click();
+    await page.locator(`//input[contains(@id, 'add-to-cart-button')]`).click();
+    await expect(page.getByText('The product has been added to')).toBeVisible();
 }
