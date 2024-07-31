@@ -1,0 +1,20 @@
+{
+  "name": "express_api_tests",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "@playwright/test": "^1.44.1",
+    "@types/node": "^20.14.2"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "msnodesqlv8": "^4.2.1",
+    "mssql": "^11.0.1",
+    "sqlite3": "^5.1.7"
+  }
+}
