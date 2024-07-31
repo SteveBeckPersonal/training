@@ -1,0 +1,11 @@
+{
+    "server": "tcp:capinspired.database.windows.net", 
+    "database": "capi-inspired-training",
+    "user": "capi-inspired-training",
+    "password":"R?+3C-[M140eSv+z",
+    "options": {
+       
+        "trustServerCertificate": true
+    },
+    "driver": "msnodesqlv8"
+}

@@ -1,0 +1,20 @@
+{
+  "name": "msql_tests",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@playwright/test": "^1.45.3",
+    "@types/node": "^22.0.0"
+  },
+  "dependencies": {
+    "@faker-js/faker": "^8.4.1",
+    "msnodesqlv8": "^4.2.1",
+    "mssql": "^11.0.1",
+    "playwright": "^1.45.3"
+  }
+}
